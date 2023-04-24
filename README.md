@@ -17,25 +17,45 @@
 <a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
 <a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
 <a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
+
 </p>
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This API is for phone number verification in input phone number consist of country code and the number itself, 
+`e.g., {"country_code": 1, "phone_number": 14158586273 }`
 
-## Installation
+## pre-requisite installation
+- [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- [MySQL](https://www.mysql.com) database used in this API
+
+For mySQL configuration,
+In `/src/app.module.ts`
+```typescript
+    ...
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: 'localhost',
+      port: 3306,             # change to your port number of mySQL database
+      username: 'root',       # change to your username of mySQL database
+      password: 'mySql12345', # change to your password of mySQL database
+      database: 'test',       # change to your desired database of mySQL database
+      entities: [PhoneNumInfoEntity],
+      synchronize: true,
+    }),
+    ...
+```
+
+
+## Installation of dependencies
 
 ```bash
 $ npm install
 ```
 
-## Running the app
+## Running the API
 
 ```bash
 # development
@@ -48,28 +68,30 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
+- default port is `3000` at `http://127.0.0.1`
+- The url of api would be at `http://127.0.0.1:3000`
+
+### Testing the API on `http://127.0.0.1:3000/verify`
 
 ```bash
-# unit tests
-$ npm run test
+# use curl to verify the phone number with two parameter 
+# the input data could be in json format, e.g., {"country_code": 1, "phone_number": 14158586273 }
 
-# e2e tests
-$ npm run test:e2e
+$ curl -X POST -H 
+  'Content-Type: application/json' 
+  -d '{"country_code": 1, "phone_number": 14158586273 }'
+  'http://127.0.0.1:3000/verify'
 
-# test coverage
-$ npm run test:cov
+# example response, return country, location, carrier and line type of the number along with number id in JSON format
+$ {"phoneNumber_id":"1-14158586273","country":"United States of America","location":"Novato","carrier":"AT&T Mobility LLC","line_type":"mobile"}
+
 ```
+
 
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
 ## License
 
