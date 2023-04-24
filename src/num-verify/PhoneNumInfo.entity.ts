@@ -21,6 +21,4 @@ export class PhoneNumInfoEntity {
 
   @Column('varchar', { length: 30 })
   line_type: string;
-
-
 }

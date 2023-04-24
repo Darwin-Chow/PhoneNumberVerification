@@ -1,7 +1,6 @@
 import { NumVerifyService } from './num-verify/num-verify.service';
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { AppService } from './app.service';
-import { Observable, firstValueFrom } from 'rxjs';
 import { PhoneNumInfo } from './num-verify/phoneNumInfo';
 import { PhoneNumber } from './num-verify/PhoneNumber';
 import { PhoneNumberDbService } from './phone-number-db/phone-number-db.service';
@@ -29,5 +28,4 @@ export class AppController {
 
     return JSON.stringify(data);
   }
-
 }
