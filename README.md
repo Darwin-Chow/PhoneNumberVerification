@@ -82,8 +82,15 @@ $ curl -X POST -H
   -d '{"country_code": 1, "phone_number": 14158586273 }'
   'http://127.0.0.1:3000/verify'
 
-# example response, return country, location, carrier and line type of the number along with number id in JSON format
+# Example responses
+# sucessful response, return country, location, carrier and line type of the number along with number id in JSON format
 $ {"phoneNumber_id":"1-14158586273","country":"United States of America","location":"Novato","carrier":"AT&T Mobility LLC","line_type":"mobile"}
+
+# invalid phone number
+$ {"phoneNumber_id":"852-85203556234","country":"invalid","location":"invalid","carrier":"invalid","line_type":"invalid"}
+
+# invalid input data format
+$ {"statusCode":400,"message":["phone_number should not be empty"],"error":"Bad Request"}
 
 ```
 
